@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import random
 
 app = Flask(__name__)
-# Define an expanded list of question templates
+# defining the questions (templates..................)
 question_templates = [
     "What are your thoughts on {}?",
     "How do you feel about {}?",
@@ -156,7 +156,7 @@ question_templates = [
     "What are the current issues with {}?"
 ]
 
-# Define an expanded list of non-technical topics
+# defining the topics (templates.....................)
 topics = [
     "work-life balance",
     "traveling",
@@ -212,19 +212,19 @@ topics = [
 all_combinations = [(template, topic) for template in question_templates for topic in topics]
 random.shuffle(all_combinations)
 
-# Generate questions
+# Generate questions  
 questions = [template.format(topic) for template, topic in all_combinations]
 
-# Function to get random questions
+# Random questions
 def get_random_questions(num_questions):
     return random.sample(questions, num_questions)
 
-# Define route for home page
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Define route to handle form submission
+
 @app.route('/generate', methods=['POST'])
 def generate_questions():
     try:
