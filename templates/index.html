@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,15 +15,30 @@
         .error {
             color: red;
         }
+        .loader {
+            border: 4px solid rgba(255, 165, 0, 0.2); /* Light orange color */
+            border-top: 4px solid orange; /* Orange color */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto; /* Centered loader */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
     <h1>Random Question Generator</h1>
-    <form action="/generate" method="POST">
+    <form id="questionForm" action="/generate" method="POST">
         <label for="num_questions">Enter number of questions:</label>
         <input type="number" id="num_questions" name="num_questions" min="1" required>
         <button type="submit">Generate Questions</button>
     </form>
+
+    <div id="loader" class="loader" style="display: none;"></div>
 
     {% if questions %}
         <h2>Generated Questions:</h2>
@@ -38,5 +52,11 @@
     {% if error %}
         <p class="error">Please enter a valid number.</p>
     {% endif %}
+
+    <script>
+        document.getElementById('questionForm').addEventListener('submit', function() {
+            document.getElementById('loader').style.display = 'block';
+        });
+    </script>
 </body>
 </html>
