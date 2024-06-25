@@ -209,18 +209,31 @@ topics = [
     "space exploration",
 ]
 
+
+all_combinations = [(template, topic) for template in question_templates for topic in topics]
+random.shuffle(all_combinations)
+
+# Generate questions
+questions = [template.format(topic) for template, topic in all_combinations]
+
+# Function to get random questions
+def get_random_questions(num_questions):
+    return random.sample(questions, num_questions)
+
+# Define route for home page
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('non.html')
 
+# Define route to handle form submission
 @app.route('/generate', methods=['POST'])
 def generate_questions():
     try:
         num_questions = int(request.form['num_questions'])
         random_questions = get_random_questions(num_questions)
-        return render_template('index.html', questions=random_questions, num_questions=num_questions)
+        return render_template('non.html', questions=random_questions, num_questions=num_questions)
     except ValueError:
-        return render_template('index.html', error=True)
+        return render_template('non.html', error=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
