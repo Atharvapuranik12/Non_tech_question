@@ -209,21 +209,9 @@ topics = [
     "space exploration",
 ]
 
-all_combinations = [(template, topic) for template in question_templates for topic in topics]
-random.shuffle(all_combinations)
-
-# Generate questions  
-questions = [template.format(topic) for template, topic in all_combinations]
-
-# Random questions
-def get_random_questions(num_questions):
-    return random.sample(questions, num_questions)
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route('/generate', methods=['POST'])
 def generate_questions():
